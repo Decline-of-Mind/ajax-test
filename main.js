@@ -18,14 +18,14 @@ function getTableHeaders(obj) {
 
     Object.keys(obj).forEach(function (key) {
         tableHeaders.push(`<td>${key}</td>`);
-    })
+    });
     return `<tr>${tableHeaders}</tr>`
 }
 
 function writeToDocument(type) {
     var tableRows = [];
     var el = document.getElementById("data");
-    el.innerHTML = "";
+    
 
     getData(type, function (data) {
         data = data.results;
@@ -35,11 +35,13 @@ function writeToDocument(type) {
             var dataRow = [];
 
             Object.keys(item).forEach(function (key) {
-                dataRow.push(`<td>${item[key]}</td> `)
+                var rowData = item[key].toString()
+                var truncatedData = rowData.substring(0, 15)
+                dataRow.push(`<td>${truncatedData}</td> `)
             });
-            tableRows.push(dataRow)
+            tableRows.push(`<tr>${dataRow}</tr>`)
         });
 
-        el.innerHTML = `< table > ${ tableHeaders }${ tableRows }</table > `;
+        el.innerHTML = `<table> ${ tableHeaders }${ tableRows }</table> `;
     });
 }
